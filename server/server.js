@@ -1,5 +1,6 @@
 //express并没有引入import的模块化，所以需要使用require()
 const express = require('express');
+const utility = require('utility');    //用于加密
 const UserRoute = require('./UserRoute');   //引入用户路由
 //引入中间件
 const cookieParser = require('cookie-parser');   //存储cookie

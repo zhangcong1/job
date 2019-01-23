@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';  //用于非路由组件使用this.props.history
+import { connect } from 'react-redux';
+import {loadData } from '../../redux/user.redux';
 
 /*
 *   用户是否登录
@@ -9,6 +11,10 @@ import { withRouter } from 'react-router-dom';  //用于非路由组件使用thi
 *
 * */
 @withRouter
+@connect(
+    null,
+    { loadData }
+)
 class AuthRoute extends React.Component{
     componentDidMount(){
         //如果本页面是登录或者注册页面，不需要判断跳转登录页面
@@ -24,7 +30,7 @@ class AuthRoute extends React.Component{
             if(res.status == 200){
                 //判断用户是否登录
                 if(res.data.code == 0){
-                    //用户已经登录
+                    this.props.loadData(res.data.data)
                 }else{
                     //用户还未登录，跳转至login页面
                     this.props.history.push('/login')
