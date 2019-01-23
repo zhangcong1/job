@@ -12,6 +12,10 @@ import Logo from '../../component/logo/logo';
 class Login extends React.Component{
     constructor(props){
         super(props)
+        this.state={
+            name:'',
+            pwd:''
+        }
         this.toRegister = this.toRegister.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
     }

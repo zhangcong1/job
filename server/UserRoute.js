@@ -19,7 +19,7 @@ Router.get('/list',function (req,res) {
 })
 //登录
 Router.post('/login',function (req,res) {
-    const { name ,pwd} = req.body;
+    const { name ,pwd } = req.body;
     User.findOne({name,pwd:md5Pwd(pwd)},_filter,function (err,doc) {
         if(!doc){
             return res.json({code:1,msg:'用户名或者密码错误'})
