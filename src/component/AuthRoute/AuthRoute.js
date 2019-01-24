@@ -39,7 +39,7 @@ class AuthRoute extends React.Component{
         })
     }
     render(){
-        return <h4>判断登录后跳转的路由</h4>
+        return null
     }
 }
 

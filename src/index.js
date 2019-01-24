@@ -20,6 +20,8 @@ import './index.css'  //引入样式
 import Login from './container/login/login';
 import Register from './container/register/register';
 import AuthRoute from './component/AuthRoute/AuthRoute';
+import BossInfo from './container/boss-info/boss-info';
+import GeniusInfo from './container/GeniusInfo/GeniusInfo';
 
 const store = createStore(reducers,applyMiddleware(thunk));
 
@@ -34,6 +36,8 @@ ReactDOM.render(
                 <Route path='/boss' component={Boss}/>
                 <Route path='/login' component={Login}/>
                 <Route path='/register' component={Register}/>
+                <Route path='/bossinfo' component={BossInfo}/>
+                <Route path='/geniusinfo' component={GeniusInfo}/>
             </div>
         </Router>
     </Provider>),

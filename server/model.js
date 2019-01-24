@@ -18,6 +18,8 @@ const model = {
         head:{type:String},
         //简介
         desc:{type:String},
+        //职位名称
+        title:{type:String},
         //如果是Boss还需要两条
         company:{type:String},
         money:{type:String}
