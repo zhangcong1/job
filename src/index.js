@@ -22,22 +22,22 @@ import Register from './container/register/register';
 import AuthRoute from './component/AuthRoute/AuthRoute';
 import BossInfo from './container/boss-info/boss-info';
 import GeniusInfo from './container/GeniusInfo/GeniusInfo';
+import Dashboard from './component/Dashboard/Dashboard';
 
 const store = createStore(reducers,applyMiddleware(thunk));
 
-function Boss() {
-    return <h3>Boss页面</h3>
-}
 ReactDOM.render(
     (<Provider store={store}>
         <Router>
             <div>
                 <AuthRoute/>
-                <Route path='/boss' component={Boss}/>
-                <Route path='/login' component={Login}/>
-                <Route path='/register' component={Register}/>
-                <Route path='/bossinfo' component={BossInfo}/>
-                <Route path='/geniusinfo' component={GeniusInfo}/>
+                <Switch>
+                    <Route path='/login' component={Login}/>
+                    <Route path='/register' component={Register}/>
+                    <Route path='/bossinfo' component={BossInfo}/>
+                    <Route path='/geniusinfo' component={GeniusInfo}/>
+                    <Route component={Dashboard}/>
+                </Switch>
             </div>
         </Router>
     </Provider>),

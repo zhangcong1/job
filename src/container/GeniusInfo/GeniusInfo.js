@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {NavBar, Icon, List, InputItem, WhiteSpace, WingBlank, Button, TextareaItem} from 'antd-mobile';
 import HeadSelect from '../../component/HeadSelect/HeadSelect';
 import { connect } from 'react-redux';
@@ -10,10 +9,6 @@ import { update } from '../../redux/user.redux'
     { update }
 )
 class GeniusInfo extends React.Component{
-
-    static PropTypes = {
-        HeadSelect:PropTypes.func
-    }
     constructor(props){
         super(props)
         this.state={

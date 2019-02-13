@@ -11,9 +11,10 @@ const _filter = {pwd:0};                  //查询返回过滤
 //查询用户
 Router.get('/list',function (req,res) {
     // User.remove({},(err,doc)=>{})
-    User.find({},(err,doc)=>{
+    const {type} = req.query
+    User.find({type},(err,doc)=>{
         if(!err){
-            return res.json(doc)
+            return res.json({code:0,data:doc})
         }
     })
 })

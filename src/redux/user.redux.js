@@ -29,8 +29,8 @@ export function user(state=initState,action) {
 function errorMsg(msg){
     return { msg, type:ERROR_MSG}
 }
-function authSucess(data) {
-    console.log(data)
+function authSucess(obj) {
+    const { pwd ,...data} = obj;
     return {type:AUTH_SUCCESS , data:data}
 }
 /*function loginSucess(data) {

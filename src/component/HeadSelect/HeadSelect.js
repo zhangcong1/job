@@ -1,6 +1,10 @@
 import React from 'react';
 import { Grid } from 'antd-mobile'
+import PropTypes from 'prop-types';
 class HeadSelect extends React.Component{
+    static PropTypes = {
+        HeadSelect:PropTypes.func.isRequired
+    }
     constructor(props){
         super(props)
         this.state={
