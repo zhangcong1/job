@@ -53,7 +53,8 @@ class Dashboard extends React.Component{
         const tabBarStyle={
             position:'fixed',
             width:'100%',
-            bottom:0
+            bottom:0,
+            zIndex:-1
         }
         return (
             <div>

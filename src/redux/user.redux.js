@@ -12,7 +12,7 @@ const initState = {
     msg:''
 }
 export function user(state=initState,action) {
-    console.log(action)
+    // console.log(action)
     switch (action.type){
         case AUTH_SUCCESS:
             return {...state,msg:'',registerTo:getRigisterTo(action.data.type,action.data.head),...action.data}
