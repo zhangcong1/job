@@ -14,7 +14,11 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
 io.on('connection',function (socket) {
-    console.log('user login');
+    //监听消息
+    socket.on('sendmsg',function (data) {
+        //讲消息发送出去
+        io.emit('recvmsg',data)
+    })
 })
 //开启中间件
 app.use(cookieParser());
