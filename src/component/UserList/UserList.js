@@ -1,10 +1,15 @@
 import React from 'react'
 import { Card, WingBlank, WhiteSpace } from 'antd-mobile'
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';  //用于非路由组件使用this.props.history
 
+@withRouter
 class UserList extends React.Component{
     static PropTypes = {
         userList:PropTypes.array.isRequired
+    }
+    handelClick(v){
+        this.props.history.push(`/chat/${v.name}`)
     }
     render(){
         return(
@@ -15,7 +20,7 @@ class UserList extends React.Component{
                         v.head?(
                             <div key={v._id}>
                                 <WhiteSpace/>
-                                <Card>
+                                <Card onClick={()=>this.handelClick(v)}>
                                     <Card.Header
                                         title={v.name}
                                         thumb={v.head}
