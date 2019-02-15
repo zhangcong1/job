@@ -5,29 +5,35 @@ import { List, InputItem, WhiteSpace, WingBlank, Button,Radio } from 'antd-mobil
 
 import { connect } from 'react-redux';
 import { register } from '../../redux/user.redux';
-
+//引入高阶组件
+import HOCForm from '../../component/HOCForm/HOCForm'
 @connect(
     state=>state.user,
     { register }
 )
+@HOCForm
 class Register extends React.Component{
     constructor(props){
         super(props)
-        this.state={
+/*        this.state={
             name:'',
             pwd:'',
             repeatPwd:'',
             type:'genius'
-        }
+        }*/
         this.handleRegister = this.handleRegister.bind(this);
     }
-    handleChange(key,val){
+    componentDidMount(){
+        //给初始值
+        this.props.handleChange('type','genius')
+    }
+/*    handleChange(key,val){
         this.setState({
             [key]:val
         })
-    }
+    }*/
     handleRegister(){
-        this.props.register(this.state)
+        this.props.register(this.props.state)
     }
     render(){
         const RadioItem = Radio.RadioItem;
@@ -39,28 +45,28 @@ class Register extends React.Component{
                     {this.props.msg ? <p className="error-msg">{this.props.msg}</p> : null}
                     <List>
                         <InputItem
-                            onChange={v=>this.handleChange('name',v)}
+                            onChange={v=>this.props.handleChange('name',v)}
                         >
                             用户</InputItem>
                         <InputItem
                             type="password"
-                            onChange={v=>this.handleChange('pwd',v)}
+                            onChange={v=>this.props.handleChange('pwd',v)}
                         >
                             密码</InputItem>
                         <InputItem
                             type="password"
-                            onChange={v=>this.handleChange('repeatPwd',v)}
+                            onChange={v=>this.props.handleChange('repeatPwd',v)}
                         >
                             确认密码</InputItem>
                         <RadioItem
-                            checked={this.state.type == 'genius'}
-                            onChange={()=>this.handleChange('type','genius')}
+                            checked={this.props.state.type == 'genius'}
+                            onChange={()=>this.props.handleChange('type','genius')}
                         >
                             牛人
                         </RadioItem>
                         <RadioItem
-                            checked={this.state.type == 'boss'}
-                            onChange={()=>this.handleChange('type','boss')}
+                            checked={this.props.state.type == 'boss'}
+                            onChange={()=>this.props.handleChange('type','boss')}
                         >
                             Boss
                         </RadioItem>

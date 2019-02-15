@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { getRigisterTo } from '../util';
 const AUTH_SUCCESS = "AUTH_SUCCESS";
+const LOGOUT = "LOGOUT";
 const ERROR_MSG = "ERROR_MSG";
 const LOAD_DATA = "LOAD_DATA";
 
@@ -16,6 +17,8 @@ export function user(state=initState,action) {
     switch (action.type){
         case AUTH_SUCCESS:
             return {...state,msg:'',registerTo:getRigisterTo(action.data.type,action.data.head),...action.data}
+        case LOGOUT:
+            return {...initState,registerTo:'/login'}
         case LOAD_DATA:
             return {...state,...action.data}
         case ERROR_MSG:
@@ -33,6 +36,10 @@ function authSucess(obj) {
     const { pwd ,...data} = obj;
     return {type:AUTH_SUCCESS , data:data}
 }
+//退出登录
+export function logout() {
+    return {type:LOGOUT}
+}
 /*function loginSucess(data) {
 
     return {type:LOGIN_SUCCESS , data:data}
@@ -40,6 +47,7 @@ function authSucess(obj) {
 export function loadData(userInfo) {
     return {type:LOAD_DATA , data:userInfo }
 }
+//选择头像  完善信息
 export function update(data) {
     return dispatch=>{
         axios.post('user/authInfo',data).then(res=>{
@@ -52,6 +60,7 @@ export function update(data) {
         })
     }
 }
+//登录
 export function login({name,pwd}) {
     if(!name || !pwd){
         return errorMsg("信息必须填写")
@@ -67,6 +76,7 @@ export function login({name,pwd}) {
         })
     }
 }
+//注册
 export function register({name,pwd,repeatPwd ,type}) {
     if(!name || !pwd || !type){
         return errorMsg("信息必须填写")

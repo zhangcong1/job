@@ -2,8 +2,11 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Result,WhiteSpace ,List,Modal,Button} from 'antd-mobile'
 import browserCookies from 'browser-cookies';
+import {logout} from '../../redux/user.redux';
+import { Redirect } from 'react-router-dom';
 @connect(
-    state=>state.user
+    state=>state.user,
+    { logout }
 )
 class Me extends React.Component{
     constructor(props){
@@ -11,13 +14,12 @@ class Me extends React.Component{
         this.logOut = this.logOut.bind(this)
     }
     logOut(){
-        console.log(11)
         const alert = Modal.alert
         alert('注销', '确定退出登录???', [
             { text: '取消', onPress: () => console.log('cancel') },
             { text: '确定', onPress: () => {
                 browserCookies.erase('userId')
-                window.location.href = window.location.href
+                this.props.logout();
             } },
         ])
     }
@@ -45,7 +47,7 @@ class Me extends React.Component{
                 <List>
                     <Button onClick={this.logOut}>退出登录</Button>
                 </List>
-            </div>:null
+            </div>:<Redirect to={this.props.registerTo}/>
         )
     }
 }
