@@ -1,8 +1,16 @@
 import React from 'react'
 import io from 'socket.io-client';
-import {List,InputItem} from 'antd-mobile'
+import {List,InputItem,NavBar,Icon } from 'antd-mobile'
+import {connect } from 'react-redux'
+import { getMsgList,sendMsg,recvMsg } from '../../redux/chat.redux'
 //因为跨域，所以要传入后台的地址  注意是ws协议
 const socket = io('ws://localhost:9094');
+const Item = List.Item;
+
+@connect(
+    state=>state,
+    { getMsgList,sendMsg,recvMsg }
+)
 class Chat extends React.Component{
     constructor(props){
         super(props)
@@ -12,11 +20,16 @@ class Chat extends React.Component{
         }
     }
     componentDidMount(){
-        socket.on('recvmsg',(data)=>{
+        /*socket.on('recvmsg',(data)=>{
             this.setState({
                 msg:[...this.state.msg,data.text]
             })
-        })
+        })*/
+        if(!this.props.chat.chatmsg.length){
+            this.props.getMsgList();
+            this.props.recvMsg();
+        }
+
     }
     handleChange(v){
         this.setState({
@@ -25,16 +38,43 @@ class Chat extends React.Component{
     }
     handleSubmit(){
         //发送
-        socket.emit('sendmsg',{text:this.state.text})
+        // socket.emit('sendmsg',{text:this.state.text})
+        const from = this.props.user._id;
+        const to = this.props.match.params._id;
+        const msg = this.state.text;
+        this.props.sendMsg({from,to,msg});
         this.setState({
             text:''
         })
     }
     render(){
-        console.log(this.props)
+        const other_id = this.props.match.params._id;
+/*        if(!this.props.chat.users.length){
+            return null
+        }*/
+        const users = this.props.chat.users;
+        const from = this.props.match.params._id;
+        const me = this.props.user._id;
         return (
-            <div>
-                {this.state.msg.map(v=>(<p key={v}>{v}</p>))}
+            <div id="chat-box">
+                <NavBar
+                    className="fixed-header"
+                    mode="dard"
+                    icon={<Icon type="left" />}
+                    onLeftClick={() => this.props.history.goBack()}
+                >{ users[from].name}</NavBar>
+                <div className="msg_box">
+                    {this.props.chat.chatmsg.map(v=>(
+                        other_id==v.from?
+                            <Item key={v._id} thumb={users[from].head}>{v.content}</Item>
+                            : <Item
+                            className="chat-me"
+                            key={v._id}
+                            extra={<img src={users[me].head}/>}
+                        >{v.content}</Item>
+                    ))}
+                </div>
+
                 <List className="input-footer">
                     <InputItem
                         value={this.state.text}

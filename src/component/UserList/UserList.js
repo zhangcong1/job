@@ -9,7 +9,7 @@ class UserList extends React.Component{
         userList:PropTypes.array.isRequired
     }
     handelClick(v){
-        this.props.history.push(`/chat/${v.name}`)
+        this.props.history.push(`/chat/${v._id}`)
     }
     render(){
         return(

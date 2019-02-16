@@ -6,6 +6,8 @@ const UserRoute = require('./UserRoute');   //引入用户路由
 const cookieParser = require('cookie-parser');   //存储cookie
 const bodyParser = require('body-parser');     //解析post请求回来的数据
 
+const Model = require('./model')         //引入模型
+const Chat = Model.getModel('Chat')
 //新建app
 const app = express();
 
@@ -16,8 +18,15 @@ const io = require('socket.io')(server);
 io.on('connection',function (socket) {
     //监听消息
     socket.on('sendmsg',function (data) {
-        //讲消息发送出去
-        io.emit('recvmsg',data)
+        const chatid = [data.from,data.to].sort().join('-');
+        const {from,to,msg} = data;
+        Chat.create({chatid,from,to,content:msg},function (err,doc) {
+            if(!err){
+                //讲消息发送出去
+                io.emit('recvmsg',Object.assign({},doc._doc))
+            }
+        })
+
     })
 })
 //开启中间件

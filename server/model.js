@@ -11,22 +11,27 @@ mongoose.connection.on('connected',function () {
 const model = {
     //用户模型
     User:{
-        name:{type:String,require:true},
-        pwd:{type:String,require:true},
-        type:{type:String,require:true},
+        'name':{type:String,require:true},
+        'pwd':{type:String,require:true},
+        'type':{type:String,require:true},
         //头像
-        head:{type:String},
+        'head':{type:String},
         //简介
-        desc:{type:String},
+        'desc':{type:String},
         //职位名称
-        title:{type:String},
+        'title':{type:String},
         //如果是Boss还需要两条
-        company:{type:String},
-        money:{type:String}
+        'company':{type:String},
+        'money':{type:String}
     },
     //聊天模型
     Chat:{
-
+        'chrtid':{type:String,require:true},
+        'from':{type:String,require:true},
+        'to':{type:String,require:true},
+        'read':{type:Boolean,default:false},
+        'content':{type:String,require:true,default:''},
+        'create_time':{type:Number,default:new Date().getTime()},
     }
 }
 

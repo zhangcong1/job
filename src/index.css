@@ -7,10 +7,11 @@
     width:100%;
     bottom: 0;
 }
-.fixed-header .am-navbar{
+.fixed-header{
     position: fixed;
     width:100%;
     top: 0;
+    z-index: 10;
 }
 .am-card-header-content img{
     width: 40px;
@@ -21,4 +22,14 @@
     bottom:0;
     left:0;
     width: 100%;
+}
+#chat-box .chat-me .am-list-content{
+    text-align: right!important;
+}
+#chat-box .am-list-item .am-list-line .am-list-extra{
+    flex-basis:15%
+}
+.msg_box{
+    padding-top: 50px;
+    padding-bottom: 50px;
 }

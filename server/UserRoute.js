@@ -6,6 +6,7 @@ const utility = require('utility');    //用于加密
 const Router = express.Router();       //引入express Router中间件
 const Model = require('./model')         //引入模型
 const User = Model.getModel('User')
+const Chat = Model.getModel('Chat')
 const _filter = {pwd:0};                  //查询返回过滤
 
 //查询用户
@@ -98,6 +99,31 @@ Router.get('/info',function (req,res) {
         return res.json({code:0,data:doc})
     })
 })
+//获取用户聊天
+
+Router.get('/getmsglist',function (req,res) {
+    // Chat.remove({},(err,doc)=>{})
+    const userId = req.cookies.userId;
+    //先取出所有的用户名称和头像
+    User.find({},function (err,userdoc) {
+        if(!err){
+            let users = {};
+            userdoc.forEach(v=>{
+                users[v._id]={name:v.name,head:v.head}
+            })
+            //获取消息
+            Chat.find({'$or':[{from:userId},{to:userId}]},function (err,doc) {
+                if(!err){
+                    res.json({code:0,msgs:doc,users:users})
+                }
+            })
+        }
+    })
+
+
+
+})
+
 
 //加盐加密
 function md5Pwd(pwd) {

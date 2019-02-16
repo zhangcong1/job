@@ -6,15 +6,21 @@ import NavLinkBar from '../Navlink/Navlink'
 import Genius from '../Genius/Genius'
 import Boss from '../Boss/Boss'
 import Me from '../Me/Me'
+import { getMsgList,recvMsg } from '../../redux/chat.redux'
 
 function Msg() {
     return <h2>msg</h2>
 }
 
 @connect(
-    state=>state
+    state=>state,
+    { getMsgList,recvMsg }
 )
 class Dashboard extends React.Component{
+    componentDidMount(){
+        this.props.getMsgList();
+        this.props.recvMsg();
+    }
     render(){
         const user = this.props.user;
         const {pathname} = this.props.location;
@@ -58,8 +64,11 @@ class Dashboard extends React.Component{
         }
         return (
             <div>
-                <NavBar mode="dard" className="fixed-header">{NavList.find(v=>v.path==pathname).title}</NavBar>
-                <div>
+                <NavBar
+                    mode="dard"
+                    className="fixed-header"
+                >{NavList.find(v=>v.path==pathname).title}</NavBar>
+                <div className="msg_box">
                     <Switch>
                         {NavList.map(v=>(
                             <Route key={v.path} path={v.path} component={v.component}></Route>
