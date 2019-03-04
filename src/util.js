@@ -10,3 +10,7 @@ export function getRigisterTo(type,head) {
     }
     return url;
 }
+
+export function getChartId(userId,targetId) {
+    return [userId,targetId].sort().join('-');
+}

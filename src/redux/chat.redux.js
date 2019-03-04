@@ -19,27 +19,29 @@ export function chat(state=initState,action) {
     switch (action.type){
         case MSG_LIST:
             console.log(action.payload)
-         return {...state,users:action.payload.users,chatmsg:action.payload.msgs,unread:action.payload.msgs.filter(v=>!v.read).length}
+         return {...state,users:action.payload.users,chatmsg:action.payload.msgs,unread:action.payload.msgs.filter(v=>!v.read && v.to==action.userid).length}
         case MSG_RECV:
             console.log(action.payload)
-            return {...state,chatmsg:[...state.chatmsg,action.payload],unread:state.unread+1}
+            const n = action.userid == action.payload.to ? 1 : 0;
+            return {...state,chatmsg:[...state.chatmsg,action.payload],unread:state.unread+n}
         case MSG_READ:
         default:
             return state
 
     }
 }
-function msglist(data) {
-    return {type:'MSG_LIST',payload:data}
+function msglist(data,userid) {
+    return {type:'MSG_LIST',payload:data,userid}
 }
 //获取聊天列表
 export function getMsgList() {
-    return dispatch=>{
+    return (dispatch,getState)=>{
         axios.get('/user/getmsglist')
             .then(res=>{
                 console.log(res)
                 if(res.status == 200 && res.data.code ==0){
-                    dispatch(msglist(res.data))
+                    const userid = getState().user._id;
+                    dispatch(msglist(res.data,userid))
                 }
             })
     }
@@ -51,15 +53,15 @@ export function sendMsg({from,to,msg}) {
         socket.emit('sendmsg',{from,to,msg})
     }
 }
-function recv_msg(msg) {
-    return {type:MSG_RECV,payload:msg}
+function recv_msg(msg,userid) {
+    return {type:MSG_RECV,payload:msg,userid}
 }
 //接收消息
 export function recvMsg() {
-    return dispatch=>{
+    return (dispatch,getState)=>{
         socket.on('recvmsg',(data)=>{
-            console.log(data)
-             dispatch(recv_msg(data))
+            const userid = getState().user._id;
+             dispatch(recv_msg(data,userid))
          })
     }
 }

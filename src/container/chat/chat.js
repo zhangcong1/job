@@ -3,9 +3,11 @@ import io from 'socket.io-client';
 import {List,InputItem,NavBar,Icon } from 'antd-mobile'
 import {connect } from 'react-redux'
 import { getMsgList,sendMsg,recvMsg } from '../../redux/chat.redux'
+import { getChartId } from '../../util'
 //因为跨域，所以要传入后台的地址  注意是ws协议
 const socket = io('ws://localhost:9094');
 const Item = List.Item;
+
 
 @connect(
     state=>state,
@@ -55,6 +57,8 @@ class Chat extends React.Component{
         const users = this.props.chat.users;
         const from = this.props.match.params._id;
         const me = this.props.user._id;
+        const chatid = getChartId(from,me);
+        const chatmsg = this.props.chat.chatmsg.filter(v=>(v.chatid == chatid));
         return (
             <div id="chat-box">
                 <NavBar
@@ -64,7 +68,7 @@ class Chat extends React.Component{
                     onLeftClick={() => this.props.history.goBack()}
                 >{ users[from].name}</NavBar>
                 <div className="msg_box">
-                    {this.props.chat.chatmsg.map(v=>(
+                    {chatmsg.map(v=>(
                         other_id==v.from?
                             <Item key={v._id} thumb={users[from].head}>{v.content}</Item>
                             : <Item

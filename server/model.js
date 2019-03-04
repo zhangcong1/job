@@ -26,7 +26,7 @@ const model = {
     },
     //聊天模型
     Chat:{
-        'chrtid':{type:String,require:true},
+        'chatid':{type:String,require:true},
         'from':{type:String,require:true},
         'to':{type:String,require:true},
         'read':{type:Boolean,default:false},
