@@ -27,6 +27,7 @@ class GeniusInfo extends React.Component{
     }
     handleUpdate(){
         this.props.update(this.state)
+        console.log(this.state)
     }
     render(){
         const locationPage = this.props.location.pathname;
@@ -54,7 +55,7 @@ class GeniusInfo extends React.Component{
                             autoHeight
                             rows={3}
                             onChange={v=>this.handleChange('desc',v)}
-                        ></TextareaItem>
+                        />
                     </List>
                     <Button type="primary" onClick={this.handleUpdate}>保存</Button>
                 </WingBlank>

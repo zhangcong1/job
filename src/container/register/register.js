@@ -59,13 +59,13 @@ class Register extends React.Component{
                         >
                             确认密码</InputItem>
                         <RadioItem
-                            checked={this.props.state.type == 'genius'}
+                            checked={this.props.state.type === 'genius'}
                             onChange={()=>this.props.handleChange('type','genius')}
                         >
                             牛人
                         </RadioItem>
                         <RadioItem
-                            checked={this.props.state.type == 'boss'}
+                            checked={this.props.state.type === 'boss'}
                             onChange={()=>this.props.handleChange('type','boss')}
                         >
                             Boss

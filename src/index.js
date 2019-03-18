@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore , applyMiddleware } from 'redux';  //引入redux
+import { createStore , compose, applyMiddleware } from 'redux';  //引入redux
 import thunk from 'redux-thunk';//引入redux-thunk中间件   action可以异步执行
 import { Provider } from 'react-redux';               //引入react-redux
 import {
@@ -25,7 +25,12 @@ import GeniusInfo from './container/GeniusInfo/GeniusInfo';
 import Dashboard from './component/Dashboard/Dashboard';
 import Chat from './container/chat/chat'
 
-const store = createStore(reducers,applyMiddleware(thunk));
+//前端redux测试工具
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(reducers,composeEnhancers(
+    applyMiddleware(thunk)
+));
 
 ReactDOM.render(
     (<Provider store={store}>

@@ -16,7 +16,7 @@ export function user(state=initState,action) {
     // console.log(action)
     switch (action.type){
         case AUTH_SUCCESS:
-            return {...state,msg:'',registerTo:getRigisterTo(action.data.type,action.data.head),...action.data}
+            return {...state,msg:'',registerTo:getRigisterTo(action.data.types,action.data.heads),...action.data}
         case LOGOUT:
             return {...initState,registerTo:'/login'}
         case LOAD_DATA:
@@ -52,7 +52,7 @@ export function update(data) {
     return dispatch=>{
         axios.post('user/authInfo',data).then(res=>{
             console.log(res)
-            if(res.status == 200 && res.data.code === 0){
+            if(res.status === 200 && res.data.code === 0){
                 dispatch(authSucess(res.data.data))
             }else{
                 dispatch(errorMsg(res.data.msg))
@@ -68,7 +68,7 @@ export function login({name,pwd}) {
     return dispatch=>{
         axios.post('user/login',{name,pwd}).then(res=>{
             console.log(res)
-            if(res.status == 200 && res.data.code === 0){
+            if(res.status === 200 && res.data.code === 0){
                 dispatch(authSucess(res.data.data))
             }else{
                 dispatch(errorMsg(res.data.msg))
@@ -81,13 +81,12 @@ export function register({name,pwd,repeatPwd ,type}) {
     if(!name || !pwd || !type){
         return errorMsg("信息必须填写")
     }
-    if(pwd != repeatPwd){
+    if(pwd !== repeatPwd){
         return errorMsg("密码不一致")
     }
     return dispatch=>{
         axios.post('user/register',{name,pwd,type}).then(res=>{
-            console.log(res)
-            if(res.status == 200 && res.data.code === 0){
+            if(res.status === 200 && res.data.code === 0){
                 dispatch(authSucess(res.data.data))
             }else{
                 dispatch(errorMsg(res.data.msg))

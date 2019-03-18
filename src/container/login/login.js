@@ -96,7 +96,7 @@ class Login extends React.Component{
     render(){
         return(
             <div>
-                {(this.props.registerTo&&this.props.registerTo!='/login') ? <Redirect to={this.props.registerTo}/> : null}
+                {(this.props.registerTo&&this.props.registerTo!=='/login') ? <Redirect to={this.props.registerTo}/> : null}
                 {/*<Hello/>*/}
                 <Logo/>
                 <WingBlank>
@@ -114,7 +114,7 @@ class Login extends React.Component{
                     </List>
                     <WhiteSpace/>
                     <Button type="primary" onClick={this.handleLogin}>登录</Button>
-                    <WhiteSpace></WhiteSpace>
+                    <WhiteSpace/>
                     <Button type="primary" onClick={this.toRegister}>注册</Button>
                 </WingBlank>
             </div>

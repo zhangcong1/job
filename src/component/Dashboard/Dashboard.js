@@ -19,7 +19,7 @@ class Dashboard extends React.Component{
     componentDidMount(){
         if(!this.props.chat.chatmsg.length) {
             this.props.getMsgList();
-            this.props.recvMsg();
+            //this.props.recvMsg();
         }
     }
     render(){
@@ -32,7 +32,7 @@ class Dashboard extends React.Component{
                 icon:'boss',
                 title:'牛人列表',
                 component:Genius,
-                hide:user.type == 'genius'
+                hide:user.types === 'genius'
             },
             {
                 path:'/genius',
@@ -40,7 +40,7 @@ class Dashboard extends React.Component{
                 icon:'boss',
                 title:'Boss列表',
                 component:Boss,
-                hide:user.type == 'boss'
+                hide:user.types === 'boss'
             },
             {
                 path:'/msg',
@@ -68,15 +68,19 @@ class Dashboard extends React.Component{
                 <NavBar
                     mode="dard"
                     className="fixed-header"
-                >{NavList.find(v=>v.path==pathname).title}</NavBar>
+                >{NavList.map(v=>{
+                    if (v.path===pathname){
+                        return v.title
+                    }
+                })}</NavBar>
                 <div className="msg_box">
                     <Switch>
                         {NavList.map(v=>(
-                            <Route key={v.path} path={v.path} component={v.component}></Route>
+                            <Route key={v.path} path={v.path} component={v.component} />
                         ))}
                     </Switch>
                 </div>
-                <div style={tabBarStyle}><NavLinkBar data={NavList}></NavLinkBar></div>
+                <div style={tabBarStyle}><NavLinkBar data={NavList} /></div>
             </div>
         )
     }

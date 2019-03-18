@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');     //解析post请求回来的数据
 
 const Model = require('./model')         //引入模型
 const Chat = Model.getModel('Chat')
+const mysql = require('./mysql');
 //新建app
 const app = express();
 
@@ -18,14 +19,30 @@ const io = require('socket.io')(server);
 io.on('connection',function (socket) {
     //监听消息
     socket.on('sendmsg',function (data) {
-        const chatid = [data.from,data.to].sort().join('-');
+        const { from, to, msg } = data;
+        const chatid = [from,to].sort().join('-');
+        // const currentdate = new Date().getTime();
+        mysql.query(`insert into chattab (chatid,froms,tos,content) values ('${chatid}','${from}','${to}','${msg}')`,function (err,ret) {
+            if (!err){
+                let doc = {
+                    cid: ret.insertId,
+                    chatid: chatid,
+                    froms: from,
+                    tos: to,
+                    content: msg
+                    // create_time: currentdate
+                }
+                io.emit('recvmsg',Object.assign({},doc))
+            }
+        })
+        /*const chatid = [data.from,data.to].sort().join('-');
         const {from,to,msg} = data;
         Chat.create({chatid,from,to,content:msg},function (err,doc) {
             if(!err){
                 //讲消息发送出去
                 io.emit('recvmsg',Object.assign({},doc._doc))
             }
-        })
+        })*/
 
     })
 })

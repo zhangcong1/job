@@ -14,7 +14,7 @@ class Msg extends React.Component{
         const Item = List.Item;
         const Brief = Item.Brief;
         const users = this.props.chat.users;
-        const userId = this.props.user._id;
+        const userId = this.props.user.uid;
         //将消息进行分组
         const msgGroup = {};
         this.props.chat.chatmsg.forEach(v=>{
@@ -29,7 +29,7 @@ class Msg extends React.Component{
             console.log(b_last - a_last)
             return b_last - a_last
         })
-
+        console.log(chatList)
 
         return(
             <List>
@@ -37,14 +37,14 @@ class Msg extends React.Component{
                     //获取列表最后一条消息
                     const lastMsg = this.getLast(v);
                     //列表展示用户信息
-                    const targetId = lastMsg.from == userId ? lastMsg.to : lastMsg.from;
+                    const targetId = lastMsg.froms == userId ? lastMsg.tos : lastMsg.froms;
                     //未读消息数
-                    const unread = v.filter(val=> !val.unread && val.to == userId).length;
+                    const unread = v.filter(val=> !val.reads && val.tos == userId).length;
                     return (
                         <Item
-                            key={lastMsg._id}
+                            key={lastMsg.cid}
                             thumb={users[targetId].head}
-                            extra={<Badge text={unread}></Badge>}
+                            extra={<Badge text={unread} />}
                             onClick={()=>{
                                 this.props.history.push(`/chat/${targetId}`)
                             }}

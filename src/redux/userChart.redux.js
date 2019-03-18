@@ -7,7 +7,7 @@ const initState = {
 export function userChart(state=initState,action) {
     switch (action.type){
         case USER_LIST:
-            return {...state,state,userList:action.payload}
+            return {...state,userList:action.payload}
         default:
             return state
     }
@@ -20,7 +20,7 @@ function userList(data) {
 export function getUserList(type) {
     return dispatch=>{
         axios.get('user/list?type='+type).then(res=>{
-            if(res.status == 200 && res.data.code === 0){
+            if(res.status === 200 && res.data.code === 0){
                 dispatch(userList(res.data.data))
             }
         })

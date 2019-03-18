@@ -8,14 +8,11 @@ import UserList from '../UserList/UserList'
     { getUserList }
 )
 class Boss extends React.Component{
-    constructor(props){
-        super(props);
-    }
     componentDidMount(){
         this.props.getUserList('boss');
     }
     render(){
-        return <UserList userList={this.props.userList}></UserList>
+        return <UserList userList={this.props.userList} />
     }
 }
 

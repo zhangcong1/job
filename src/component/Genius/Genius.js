@@ -8,14 +8,11 @@ import UserList from '../UserList/UserList'
     { getUserList }
 )
 class Genius extends React.Component{
-    constructor(props){
-        super(props);
-    }
     componentDidMount(){
         this.props.getUserList('genius');
     }
     render(){
-        return <UserList userList={this.props.userList}></UserList>
+        return <UserList userList={this.props.userList} />
     }
 }
 

@@ -8,18 +8,17 @@ import {connect} from 'react-redux'
     state=>state.chat
 )
 class NavLinkBar extends React.Component{
-    static PropTypes = {
+    /*static PropTypes = {
         data:PropTypes.array.isRequired
-    }
+    }*/
     render(){
         const navLink = this.props.data.filter(v=>!v.hide);
         const {pathname} = this.props.location
-        console.log(this.props)
         return(
             <TabBar>
                 {navLink.map(v=>(
                     <TabBar.Item
-                        badge={v.path=='/msg'?this.props.unread:0}
+                        badge={v.path==='/msg'?this.props.unread:0}
                         key={v.path}
                         title={v.text}
                         icon={{uri: require(`./img/${v.icon}.png`)}}
@@ -28,7 +27,7 @@ class NavLinkBar extends React.Component{
                         onPress={()=>{
                             this.props.history.push(v.path)
                         }}
-                    ></TabBar.Item>
+                    />
                 ))}
             </TabBar>
         )
