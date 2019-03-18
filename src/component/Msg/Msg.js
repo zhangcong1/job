@@ -10,7 +10,6 @@ class Msg extends React.Component{
         return arr[arr.length-1]
     }
     render(){
-        console.log(this.props)
         const Item = List.Item;
         const Brief = Item.Brief;
         const users = this.props.chat.users;
@@ -18,18 +17,19 @@ class Msg extends React.Component{
         //将消息进行分组
         const msgGroup = {};
         this.props.chat.chatmsg.forEach(v=>{
-            msgGroup[v.chatid] = msgGroup[v.chatid] || [];
-            msgGroup[v.chatid].push(v);
+            if (v.froms==userId||v.tos==userId){
+                msgGroup[v.chatid] = msgGroup[v.chatid] || [];
+                msgGroup[v.chatid].push(v);
+            }
         })
         const chatList =  Object.values(msgGroup).sort((a,b)=>{
-            console.log(this.getLast(a))
-            console.log(this.getLast(b))
             const a_last = this.getLast(a).create_time;
             const b_last = this.getLast(b).create_time;
-            console.log(b_last - a_last)
             return b_last - a_last
         })
-        console.log(chatList)
+        // const chatList = this.props.chat.chatmsg;
+        console.log(msgGroup)
+        console.log(this.props.chat.chatmsg)
 
         return(
             <List>

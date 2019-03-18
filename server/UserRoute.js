@@ -198,11 +198,13 @@ Router.get('/getmsglist',function (req,res) {
 Router.post('/readmsg',function (req,res) {
     const userid = req.cookies.userId;
     const { from } = req.body;
-    console.log('update chattab set '+'`'+'reads'+'`'+'='+1+' where froms='+from+' and tos='+userid)
-    mysql.query('update chattab set '+'`'+'reads'+'`'+'='+1+' where froms='+from+' and tos='+userid,function (err,ret) {
-        console.log(ret)
+    mysql.query('update chattab set '+'`'+'reads'+'`'+'='+1+' where froms='+from+' and tos='+userid+' and '+'`'+'reads'+'`'+'=0',function (err,ret) {
         if (!err){
-            return res.json({code:0,num:ret.affectedRows})
+            mysql.query(`select * from chattab where froms=${userid} or tos=${userid}`,function (error,result) {
+                if (!error){
+                    return res.json({code:0,num:ret.affectedRows,data:result})
+                }
+            })
         }
     })
 })

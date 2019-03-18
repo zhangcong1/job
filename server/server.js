@@ -21,16 +21,23 @@ io.on('connection',function (socket) {
     socket.on('sendmsg',function (data) {
         const { from, to, msg } = data;
         const chatid = [from,to].sort().join('-');
-        // const currentdate = new Date().getTime();
-        mysql.query(`insert into chattab (chatid,froms,tos,content) values ('${chatid}','${from}','${to}','${msg}')`,function (err,ret) {
+        const currentdate = new Date().getTime();
+        mysql.query(`insert into chattab (chatid,froms,tos,content,create_time) values ('${chatid}','${from}','${to}','${msg}',${currentdate})`,function (err,ret) {
             if (!err){
+                /*console.log(`select * from chattab where froms='${to}' or tos='${to}'`)
+                mysql.query(`select * from chattab where froms='${from}'`,function (error,result) {
+                    if (!error){
+                        io.emit('recvmsg',result)
+                    }
+                })*/
                 let doc = {
                     cid: ret.insertId,
                     chatid: chatid,
                     froms: from,
                     tos: to,
-                    content: msg
-                    // create_time: currentdate
+                    reads:0,
+                    content: msg,
+                    create_time: currentdate
                 }
                 io.emit('recvmsg',Object.assign({},doc))
             }

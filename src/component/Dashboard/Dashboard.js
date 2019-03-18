@@ -19,7 +19,7 @@ class Dashboard extends React.Component{
     componentDidMount(){
         if(!this.props.chat.chatmsg.length) {
             this.props.getMsgList();
-            //this.props.recvMsg();
+            this.props.recvMsg();
         }
     }
     render(){
