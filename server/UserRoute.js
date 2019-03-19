@@ -209,8 +209,9 @@ Router.post('/readmsg',function (req,res) {
     })
 })
 
-Router.get('/news',function (req,res) {
-    mysql.query('select * from news order by id limit 0,10',function (err,ret) {
+Router.post('/news',function (req,res) {
+    const step = req.body.step;
+    mysql.query(`select * from news order by id limit ${step*10},${10*(step+1)}`,function (err,ret) {
         if (!err){
             return res.json({code:0,data:ret})
         }

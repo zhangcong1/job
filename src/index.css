@@ -35,3 +35,6 @@
     padding-bottom: 50px;
     z-index: -2;
 }
+.am-pull-to-refresh.am-pull-to-refresh-up{
+    height: auto!important;
+}
