@@ -3,6 +3,7 @@ import { NavBar, TabBar } from 'antd-mobile'
 import {connect} from 'react-redux'
 import { Switch,Route} from 'react-router-dom'
 import NavLinkBar from '../Navlink/Navlink'
+import News from '../News/News'
 import Genius from '../Genius/Genius'
 import Boss from '../Boss/Boss'
 import Me from '../Me/Me'
@@ -43,6 +44,13 @@ class Dashboard extends React.Component{
                 hide:user.types === 'boss'
             },
             {
+                path:'/news',
+                text:'新闻',
+                icon:'boss',
+                title:'新闻',
+                component: News
+            },
+            {
                 path:'/msg',
                 text:'消息',
                 icon:'msg',
@@ -60,8 +68,9 @@ class Dashboard extends React.Component{
         const tabBarStyle={
             position:'fixed',
             width:'100%',
+            height:'50px',
             bottom:0,
-            zIndex:-1
+            zIndex:2,
         }
         return (
             <div>

@@ -4,9 +4,9 @@
 const express = require('express');  //引入express
 const utility = require('utility');    //用于加密
 const Router = express.Router();       //引入express Router中间件
-const Model = require('./model')         //引入模型
-const User = Model.getModel('User')
-const Chat = Model.getModel('Chat')
+// const Model = require('./model')         //引入模型
+// const User = Model.getModel('User')
+// const Chat = Model.getModel('Chat')
 const _filter = {pwd:0};                  //查询返回过滤
 
 const mysql = require('./mysql')
@@ -205,6 +205,23 @@ Router.post('/readmsg',function (req,res) {
                     return res.json({code:0,num:ret.affectedRows,data:result})
                 }
             })
+        }
+    })
+})
+
+Router.get('/news',function (req,res) {
+    mysql.query('select * from news order by id limit 0,10',function (err,ret) {
+        if (!err){
+            return res.json({code:0,data:ret})
+        }
+    })
+})
+
+Router.post('/detail',function (req,res) {
+    const id = req.body.id;
+    mysql.query('select * from news where id = '+id,function (err,ret) {
+        if (!err){
+            res.json({code:0,data:ret[0]})
         }
     })
 })

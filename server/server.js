@@ -6,11 +6,19 @@ const UserRoute = require('./UserRoute');   //引入用户路由
 const cookieParser = require('cookie-parser');   //存储cookie
 const bodyParser = require('body-parser');     //解析post请求回来的数据
 
-const Model = require('./model')         //引入模型
-const Chat = Model.getModel('Chat')
+// const Model = require('./model')         //引入模型
+// const Chat = Model.getModel('Chat')
 const mysql = require('./mysql');
 //新建app
 const app = express();
+//定时爬取数据
+// const getData = require('./news');
+// /*定时任务*/
+// var CronJob = require('cron').CronJob;
+// /*秒 分 时 天 月 星期 */
+// new CronJob('* * * * * *', function() {
+//     getData();
+// }, null, true, 'America/Los_Angeles');
 
 //引入socket.io 配合express
 const server = require('http').Server(app);

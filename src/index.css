@@ -6,6 +6,7 @@
     position: fixed;
     width:100%;
     bottom: 0;
+    height: 50px!important;
 }
 .fixed-header{
     position: fixed;
@@ -32,4 +33,5 @@
 .msg_box{
     padding-top: 50px;
     padding-bottom: 50px;
+    z-index: -2;
 }

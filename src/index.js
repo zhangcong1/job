@@ -24,6 +24,7 @@ import BossInfo from './container/boss-info/boss-info';
 import GeniusInfo from './container/GeniusInfo/GeniusInfo';
 import Dashboard from './component/Dashboard/Dashboard';
 import Chat from './container/chat/chat'
+import Detail from './container/detail/detail'
 
 //前端redux测试工具
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -43,6 +44,7 @@ ReactDOM.render(
                     <Route path='/bossinfo' component={BossInfo}/>
                     <Route path='/geniusinfo' component={GeniusInfo}/>
                     <Route path='/chat/:_id' component={Chat}/>
+                    <Route path='/detail/:id' component={Detail}/>
                     <Route component={Dashboard}/>
                 </Switch>
             </div>

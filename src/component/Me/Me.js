@@ -28,16 +28,16 @@ class Me extends React.Component{
         const Item = List.Item;
         const Brief = Item.Brief;
         return(
-            this.props.name?<div>
+            this.props.account?<div>
                 <Result
-                    img={myImg(this.props.head)}
-                    title={this.props.name}
+                    img={myImg(this.props.heads)}
+                    title={this.props.account}
                     message={this.props.company?this.props.company:null}
                 />
                 <List renderHeader={()=>'简介'}>
                     <Item>
-                        {this.props.title}
-                        {this.props.desc.split('\n').map(v=>(
+                        {this.props.titles}
+                        {this.props.descs.split('\n').map(v=>(
                             <Brief key={v}>{v}</Brief>
                         ))}
                         {this.props.money?<Brief>薪资：{this.props.money}</Brief>:null}
